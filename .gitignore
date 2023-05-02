@@ -1,1 +1,7 @@
 *.code-workspace
+api/config.yml
+api/jsonYmlTest.yml
+api/example_config.yml
+api/api.py
+config.yml
+api/__pycache__
