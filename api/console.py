@@ -20,4 +20,4 @@ class Console:
         return Color.BOLD + datetime.now().strftime("%Y-%m-%d %H:%M:%S") + Color.RED + " ERROR     " + Color.END + text
     
     def warning(text):
-        return Color.BOLD + datetime.now().strftime("%Y-%m-%d %H:%M:%S") + Color.YELLOW + " ERROR     " + Color.END + text
+        return Color.BOLD + datetime.now().strftime("%Y-%m-%d %H:%M:%S") + Color.YELLOW + " WARNING     " + Color.END + text
