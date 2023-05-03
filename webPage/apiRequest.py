@@ -1,4 +1,5 @@
 import requests
+import hashlib
 from console import Console
 
 class ApiRequest:

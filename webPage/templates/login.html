@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
+    <script>
+      function hashPassword() {
+        var password = document.getElementById('password').value;
+        var hashedPassword = sha256(password);
+        document.getElementById('password').value = hashedPassword;
+        return true;
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Login</h1>
+    {% if error %}
+      <p>{{ error }}</p>
+    {% endif %}
+    <form action="/login" method="post" onsubmit="return hashPassword();">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username"><br><br>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password"><br><br>
+      <input type="submit" value="Login">
+    </form>
+  </body>
+</html>
