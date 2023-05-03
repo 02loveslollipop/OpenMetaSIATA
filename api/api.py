@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from confLoader import ConfLoader
 from updateThread import UpdateQueue
 
-app = Flask(__name__)
+api = Flask(__name__)
 
 config = ConfLoader() #The class load the config of config.yml
 stationList = []
@@ -11,7 +11,7 @@ thread.run()
 
 
 # The route in this case CheckLevel, and the index as part of the route, the token is pass in the header of the GET request
-@app.route('/CheckLevel/<int:index>', methods=['GET'])
+@api.route('/CheckLevel/<int:index>', methods=['GET'])
 def get_value(index):
     # Check if the token is present in the request header
     if 'Authorization' not in request.headers:
@@ -32,4 +32,4 @@ def get_value(index):
 
 #Check that is running in the main
 if __name__ == '__main__':
-    app.run(debug=config.debug,host=config.host,port=config.port) #Start Flask using the configuration of config.yml
+    api.run(debug=config.debug,host=config.host,port=config.port) #Start Flask using the configuration of config.yml
