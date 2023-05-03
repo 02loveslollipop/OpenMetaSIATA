@@ -10,9 +10,6 @@ SESSION_TYPE = 'memcache'
 web = Flask(__name__, static_url_path='/static')
 #sess = Session()
 
-
-valid_users = {'user1': '5d41402abc4b2a76b9719d911017c592', 'user2': 'ad0234829205b9033196ba818f7a872b'}
-
 authorization = "MY_SECRET_TOKEN"
 
 passwordRequest = ApiRequest(host="127.0.0.1",port='6969',argsList=["Authorization","Hash","User"])
@@ -47,7 +44,7 @@ def login():
     else:
         return render_template('login.html')
 
-@web.route('/map')
+@web.route('/')
 @login_required
 def map():
     username = session['username']

@@ -25,5 +25,7 @@ class ApiRequest:
             header.update({self.argsList[i]: args[i]})
             
         print(header) #TODO: quitar esto
-        
-        return requests.get(self.url, headers=header)
+        try:
+            return requests.get(self.url, headers=header)
+        except requests.exceptions.ConnectionError as e:
+            raise ConnectionRefusedError("The host isn't available, please check the host is up and running")
