@@ -12,7 +12,6 @@
   max-width: 400px;
   margin: 0 auto;
   text-align: center;
-
 }
 
 body {
@@ -30,14 +29,14 @@ form {
   input[type="password"] {
     padding: 10px;
     border-radius: 5px;
-    border: 1px solid #ccc;
+    border: 1px solid #8b8b8b;
     margin-bottom: 20px;
     width: 100%;
     box-sizing: border-box;
   }
   
   input[type="submit"] {
-    background-color: #4CAF50;
+    background-color: #3893d8;
     color: white;
     padding: 10px 20px;
     border: none;
