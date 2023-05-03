@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Login</title>
+    <title>Login PRO</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
     <script>
@@ -14,16 +14,20 @@
     </script>
   </head>
   <body>
-    <h1>Login</h1>
-    {% if error %}
-      <p>{{ error }}</p>
-    {% endif %}
-    <form action="/login" method="post" onsubmit="return hashPassword();">
-      <label for="username">Username:</label>
-      <input type="text" id="username" name="username"><br><br>
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password"><br><br>
-      <input type="submit" value="Login">
-    </form>
+    <div class="login-container">
+      <div class="login-box">
+        <h1>Login</h1>
+        {% if error %}
+          <p>{{ error }}</p>
+        {% endif %}
+        <form action="/login" method="post" onsubmit="return hashPassword();">
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username"><br><br>
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password"><br><br>
+          <input type="submit" value="Login">
+        </form>
+      </div>
+    </div>
   </body>
 </html>

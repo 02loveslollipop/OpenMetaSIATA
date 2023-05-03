@@ -3,15 +3,19 @@ from console import Console
 from apiRequest import ApiRequest
 from confLoader import ConfLoader
 from flask import Flask, render_template, session, redirect, request, url_for
+#from flask_session import Session
 from functools import wraps
 
-web = Flask(__name__)
+SESSION_TYPE = 'memcache'
+web = Flask(__name__, static_url_path='/static')
+#sess = Session()
+
 
 valid_users = {'user1': '5d41402abc4b2a76b9719d911017c592', 'user2': 'ad0234829205b9033196ba818f7a872b'}
 
 authorization = "MY_SECRET_TOKEN"
 
-passwordRequest = ApiRequest(host="127.0.0.1",argsList=["Authorization","Hash","User"])
+passwordRequest = ApiRequest(host="127.0.0.1",port='6969',argsList=["Authorization","Hash","User"])
 
 def login_required(func):
     @wraps(func)
@@ -23,7 +27,8 @@ def login_required(func):
 
 def checkPasswordRequest(request: requests.Response) -> bool:
     try:
-        return eval(request.json())
+        print(request.json()['response'])
+        return eval(request.json()['response'])
     except requests.exceptions.JSONDecodeError:
         print(Console.warning("An error occurred trying to decode the JSON response from the API, the log will be take as False"))
         return False
@@ -56,4 +61,6 @@ def logout():
     return redirect(url_for('login'))
 
 if __name__ == '__main__':
+    web.secret_key = 'MY_SECOND_SECRET_KEY'
+    web.config['SESSION_TYPE'] = 'memcached'
     web.run(debug=True)

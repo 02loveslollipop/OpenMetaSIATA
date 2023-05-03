@@ -13,12 +13,18 @@ class ConfLoader:
         finally:
             try:
                 config = yaml.load(configFile, Loader=yaml.FullLoader)
-                self.token = config['api']['token']
-                self.timeout = config['api']['timeout']
-                self.url = config['api']['url']
-                self.debug = config['api']['debug']
                 self.host = config['network']['host']
                 self.port = config['network']['port']
+                self.debug = config['api']['debug']
+                self.token = config['api']['token']
+                self.type = config['database']['type']
+                self.path = config['database']['path']
+                self.database = config['database']['database']
+                self.user = config['database']['user']
+                self.password = config['database']['password']
+                self.dbHost = config['database']['host']
+                self.dbPort = config['database']['port']
+                self.url = config['database']['url']
                         
             except KeyError as err:
                 import traceback

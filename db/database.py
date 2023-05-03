@@ -46,6 +46,7 @@ class DataBase:
     
     def check(self,user: str,passwordHash: str) -> Response:
         for i in range(len(self.dataFrame['user'])):
+            print(f"----User #{i+1}----\nuser: {self.dataFrame['user'][i]}\nPasswordHash:{self.dataFrame['hash'][i]}\nTriedUser:{user}\nTriedPasswordHash:{passwordHash}")
             if self.dataFrame['user'][i] == user and self.dataFrame['hash'][i] == passwordHash:
                 return jsonify({'response': 'True'})
         return jsonify({'response': 'False'})
