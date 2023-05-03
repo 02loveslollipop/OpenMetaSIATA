@@ -8,7 +8,7 @@ config = ConfLoader() #The class load the config of config.yml
 database = DataBase(type='csv',path='./users.csv')
 
 # The route in this case CheckLevel, and the index as part of the route, the token is pass in the header of the GET request
-@app.route('/<str:password>', methods=['GET'])
+@app.route('/<password>', methods=['GET'])
 def get_value(password):
     return database.get(), 200
 

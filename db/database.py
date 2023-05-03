@@ -8,9 +8,9 @@ class DataBase:
     def __init__(self, type: str = 'csv', path: str = './users.csv', database: str = None, user: str = None, password: str = None, host: str = None, port: str = None, url: str = None) -> None:
         
         if type == 'csv':
-            self.dataFrame = pd.read_csv()
+            self.dataFrame = pd.read_csv(path)
         elif type == 'excel':
-            self.dataFrame = pd.read_excel()
+            self.dataFrame = pd.read_excel(path)
         elif type == 'access':
             engine = sql.create_engine(f"access+pyodbc://@{path}")
             self.dataFrame = pd.read_sql_table(database,engine)
@@ -44,6 +44,6 @@ class DataBase:
                 exit()
     def get(self) -> Response:
         print(self.dataFrame.to_string)
-        return self.dataFrame.to_json
+        return jsonify(self.dataFrame.to_dict())
     def check(self,user: str,passwordHash: str) -> bool:
         pass
