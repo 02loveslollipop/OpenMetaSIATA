@@ -9,7 +9,6 @@ stationList = []
 thread = UpdateQueue(config=config,stationList=stationList)
 thread.run()
 
-
 # The route in this case CheckLevel, and the index as part of the route, the token is pass in the header of the GET request
 @api.route('/CheckLevel/<int:index>', methods=['GET'])
 def get_value(index):

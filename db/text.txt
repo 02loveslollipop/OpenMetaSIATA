@@ -1,0 +1,1 @@
+curl -H "Authorization: MY_SECRET_TOKEN" -H "Hash: d033e22ae348aeb5660fc2140aec35850c4da997" -H "User: admin" http://127.0.0.1/

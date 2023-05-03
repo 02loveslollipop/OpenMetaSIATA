@@ -24,7 +24,7 @@ class DataBase:
                 port = '3306'
             engine = sql.create_engine(f"mysql+mysqlconnector://{user}:{password}@{host}:{port}/{database}")
             self.dataFrame = pd.read_sql_table(database,engine)
-        elif type == 'microsoftsql':
+        elif type == 'mssql':
             if port == None:
                 port = '1433'
             engine = sql.create_engine(f"mssql+pyodbc://{user}:{password}@{host}:{port}/{database}")
@@ -43,7 +43,10 @@ class DataBase:
                 print(Console.error(f"sqlalchemy throw this excpection when trying to setup the custom databse: {e}"))
                 exit()
     def get(self) -> Response:
-        print(self.dataFrame.to_string)
-        return jsonify(self.dataFrame.to_dict())
-    def check(self,user: str,passwordHash: str) -> bool:
-        pass
+        return self.dataFrame.to_dict()
+    
+    def check(self,user: str,passwordHash: str) -> Response:
+        for i in range(len(self.dataFrame['user'])):
+            if self.dataFrame['user'][i] == user and self.dataFrame['hash'][i] == passwordHash:
+                return jsonify({'response': 'True'})
+        return jsonify({'response': 'False'})
