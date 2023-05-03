@@ -1,24 +1,21 @@
-# Discord GPT Chat Bot
+# SIATAlevelChecker
 
-> A Python based Discord chat bot that uses the OpenAI GPT API with a custom role
+> A Python based solution to review and watch graphically the river levels using the SIATA API 
 > 
 [![DownloadAMD64](https://img.shields.io/docker/image-size/02loveslollipop/discordgptchatbot/1.0.0amd64?label=AMD64&logo=docker&style=for-the-badge)](https://hub.docker.com/layers/02loveslollipop/discordgptchatbot/1.0.0amd64/images/sha256-c68b237e7b0340fc5eab7a1f016f8de3b650458e38f95e74e2af2638a3897c87)
 [![DownloadARM64](https://img.shields.io/docker/image-size/02loveslollipop/discordgptchatbot/1.0.0arm64?label=ARM64&logo=docker&style=for-the-badge)](https://hub.docker.com/layers/02loveslollipop/discordgptchatbot/1.0.0arm64/images/sha256-391617d8318032a290c6ad942fb6819b96146297e61ad09186200958bb17b18c)
 [![Replit](https://img.shields.io/badge/Run%20it%20on-Replit-orange?style=for-the-badge&logo=replit)](https://replit.com/@02loveslollipop/DiscordGPTChatBot)
 
 ## Intro
-OpenAI GPT3.5 model allow to change it behavior using custom training and using system role messages, this repository allows to create a Discord Bot using the GPT 3.5 model with a custom role allowing to change the behavior of the answers of the bot.
+SIATA have an API that allows to recieve information about all of their services, this solution allows to use this information to have an easier undestanding of this data.
 
 ## Requirements
 
-1. You must a have a valid OpenAI API key to use it services (Currently using **GPT-3.5-turbo**).
-2. You need a valid Discord bot Token.
-3. A Python environment to run the repo.
-4. If you want to use voice related commands you need FFmpeg on the device that will run the bot
+1. A linux based system
 
 # Quick Setup
 
-Full setup guide available at [Setup guide](https://github.com/02loveslollipop/DiscordGPTChatBot/wiki/Setup-guide)
+The repo have an autosetup.py, that allows and help the process of deploy of the services, if you want, it's also possible to manually deploy every container.
 
 1. Install Python 3.9 in your device.
 
