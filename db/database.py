@@ -31,17 +31,16 @@ class DataBase:
             self.dataFrame = pd.read_sql_table(database,engine)
         elif type == 'custom':
             if port == None:
-                print(Console.error("You are trying to use a custom database setup but didn't provide a port"))
-                exit()
+                raise TypeError("You are trying to use a custom database setup but didn't provide a port")
                 
             if port == None:
-                print(Console.error("You are trying to use a custom database setup but didn't provide a url"))
-                exit()
+                raise TypeError("You are trying to use a custom database setup but didn't provide a url")
+            
             try:
                 engine = sql.create_engine(url)
-            except Exception as e:
-                print(Console.error(f"sqlalchemy throw this excpection when trying to setup the custom databse: {e}"))
-                exit()
+            except Exception:
+                raise TypeError("An exception occurred when sqlalchemy tried to setup the custom databse")
+                
     def get(self) -> Response:
         return self.dataFrame.to_dict()
     
