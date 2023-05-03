@@ -1,9 +1,12 @@
-FROM ubuntu
-RUN apt update
-RUN apt install python3.10 -y
-RUN apt install python3-pip -y
+FROM python:python:3.11.3
+RUN apt-get update
 WORKDIR /api
 COPY api.py .
-COPY requirements_api.txt .
-RUN pip3 install -r requirements_api.txt
-CMD [ "python3.10","api.py" ]
+COPY config.yml .
+COPY confLoader.py .
+COPY console.py .
+COPY example_config.yml .
+COPY UpdateThread.py .
+COPY requirements.txt .
+RUN pip3 install -r requirements.txt
+CMD [ "python","api.py" ]

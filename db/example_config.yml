@@ -8,7 +8,7 @@ api:
 
 database:
   type: "csv" #The type of the database: csv, excel, access, postgresql, mysql, mssql, custom
-  path: "./database.csv" #The path of the file, only use it if using csv, excel or access
+  path: "/db/database.csv" #The path of the file, only use it if using csv, excel or access
   database: "None" #The name of the database you want to use only use if using postgresql, mysql or mssql
   user: "user" #The user for the database, only use if using postgresql, mysql or mssql
   password: "1234" #The password for the database, only use if using postgresql, mysql or mssql
