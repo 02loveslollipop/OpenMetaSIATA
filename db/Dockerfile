@@ -9,4 +9,4 @@ COPY example_config.yml .
 COPY users.csv .
 COPY requirements.txt .
 RUN pip3 install -r requirements.txt
-CMD [ "python","api.py" ]
+CMD [ "python","db.py" ]
