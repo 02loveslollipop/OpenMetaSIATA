@@ -5,4 +5,4 @@ api/example_config.yml
 api/api.py
 config.yml
 api/__pycache__
-db/users.laccdb
+db/__pycache__

@@ -3,3 +3,4 @@ SQLAlchemy
 psycopg2
 mysql-connector-python
 pyodbc
+sqlalchemy-access

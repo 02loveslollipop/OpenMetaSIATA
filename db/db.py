@@ -5,13 +5,16 @@ from database import DataBase
 app = Flask(__name__)
 
 config = ConfLoader() #The class load the config of config.yml
-
+database = DataBase(type='csv',path='./users.csv')
 
 # The route in this case CheckLevel, and the index as part of the route, the token is pass in the header of the GET request
 @app.route('/<str:password>', methods=['GET'])
 def get_value(password):
-    
-    return stationList[index], 200
+    return database.get(), 200
+
+@app.route('/list', methods=['GET'])
+def get_list():
+    return database.get(), 200
 
 #Check that is running in the main
 if __name__ == '__main__':

@@ -1,18 +1,19 @@
 import pandas as pd
 import sqlalchemy as sql
+from flask import jsonify, Response
 from console import Console
 
 #Data source is users
 class DataBase:
-    def __init__(self,database: str = 'users',type: str = 'access' ,path: str = './users.accdb', user: str = None, password: str = None, host: str = None ,port: str = None, url: str = None) -> None:
+    def __init__(self, type: str = 'csv', path: str = './users.csv', database: str = None, user: str = None, password: str = None, host: str = None, port: str = None, url: str = None) -> None:
         
-        if type == 'access':
-            engine = sql.create_engine(f"access:///?DataSource={path}")
-            self.dataFrame = pd.read_sql_table(database,engine)
-        elif type == 'csv':
+        if type == 'csv':
             self.dataFrame = pd.read_csv()
         elif type == 'excel':
             self.dataFrame = pd.read_excel()
+        elif type == 'access':
+            engine = sql.create_engine(f"access+pyodbc://@{path}")
+            self.dataFrame = pd.read_sql_table(database,engine)
         elif type == 'postgresql':
             if port == None:
                 port = '5432'
@@ -41,7 +42,8 @@ class DataBase:
             except Exception as e:
                 print(Console.error(f"sqlalchemy throw this excpection when trying to setup the custom databse: {e}"))
                 exit()
-    def printDataFrame(self) -> None:
+    def get(self) -> Response:
         print(self.dataFrame.to_string)
-    def checkUserPassword(self,user: str,passwordHash: str) -> bool:
+        return self.dataFrame.to_json
+    def check(self,user: str,passwordHash: str) -> bool:
         pass
