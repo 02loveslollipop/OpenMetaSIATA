@@ -10,8 +10,23 @@ thread = UpdateQueue(config=config,stationList=stationList)
 thread.run()
 
 # The route in this case CheckLevel, and the index as part of the route, the token is pass in the header of the GET request
+@api.route('/ListStation/', methods=['GET'])
+def listValue():
+   
+    if 'Authorization' not in request.headers:
+        return jsonify({'error': 'There is no token in this request'}), 401 #HTTP 401 means that is unauthorized, because there is no token
+    
+    token = request.headers.get('Authorization') #retrieve the token as an string
+    
+    #Validadte the token:
+    if  not token == config.token: #If the token isn't valid 
+        return jsonify({'error': 'The token is not valid, if you think this is an error please contact an administrator'}), 401 #HTTP 401 means that is unauthorized, because the token isn't valid
+    
+    return jsonify({'index': f'{len(thread.stationList)}'}), 200
+
+
 @api.route('/CheckLevel/<int:index>', methods=['GET'])
-def get_value(index):
+def getValue(index):
     # Check if the token is present in the request header
     if 'Authorization' not in request.headers:
         return jsonify({'error': 'There is no token in this request'}), 401 #HTTP 401 means that is unauthorized, because there is no token

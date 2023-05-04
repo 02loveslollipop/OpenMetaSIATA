@@ -2,3 +2,8 @@ requests
 Flask-Session
 Flask
 Pandas
+plotly
+dash
+dash_core_components
+dash_html_components
+chart-studio

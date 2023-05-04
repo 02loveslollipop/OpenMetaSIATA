@@ -13,8 +13,11 @@ class ApiRequest:
         if self.resource == None:
             self.url = f"{self.protocol}://{self.host}:{self.port}/"
         else:    
-            self.url = f"{self.protocol}://{self.host}:{self.port}/{resource}/"
+            self.url = f"{self.protocol}://{self.host}:{self.port}/{resource}"
         
+    def setUrl(self,resource:str,protocol:str,host:str,port:str) -> None:
+        self.url = f"{protocol}://{host}:{port}/{resource}"
+    
     def request(self,args: list) -> requests.Response:
         
         if len(args) != len(self.argsList):
