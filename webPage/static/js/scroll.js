@@ -14,4 +14,4 @@ const observer = new IntersectionObserver(entries => {
 
 observer.observe(heroSection);
 
-//test
+
