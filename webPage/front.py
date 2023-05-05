@@ -3,23 +3,17 @@ from console import Console
 from apiRequest import ApiRequest
 from confLoader import ConfLoader
 from flask import Flask, render_template, session, redirect, request, url_for
-import json
-#from flask_session import Session
 import plotly.graph_objects as go
+import plotly
 from functools import wraps
-import dash
 from dash import dcc, html, Dash
-import chart_studio.tools as tls
-tls.get_embed('https://plotly.com/~chris/1638')
+import json
 
 SESSION_TYPE = 'memcache'
+
 web = Flask(__name__, static_url_path='/static')
 
-app = Dash(
-    __name__,
-    server=web,
-    url_base_pathname='/dash/'
-)
+app = Dash(__name__,server=web,url_base_pathname='/dash/')
 
 app.layout = html.Div()
 
@@ -65,25 +59,8 @@ def login():
 @login_required
 def map():
     username = session['username']
-    return render_template('map.html', username=username)
-
-@web.route('/')
-def index():
-    if 'username' in session:
-        username = session['username']
-    else:
-        username = "Iniciar sesion"
-    return render_template('index.html', username=username)
-
-# Define the logout route
-@web.route('/logout')
-@login_required
-def logout():
-    session.pop('username', None)
-    return redirect(url_for('login'))
-
-@web.route('/dash')
-def dashMap():
+    sessionUrl = url_for('logout')
+    sessionMessage = f"{session['username']} - Log Out"
     index = int(indexRequest.request([authorization]).json()['index'])
     
     lat = []
@@ -97,11 +74,33 @@ def dashMap():
         lon.append(currentStation['latitude'])
         lat.append(currentStation['longitude'])
         z.append(currentStation['porcentage'])
-        
-        map = go.Figure(go.Densitymapbox(lat=lat,lon=lon,z=z,radius=20, opacity= 0.9, zmin=0, zmax=100))
-        map.update_layout(mapbox_style='open-street-map',mapbox_center_lon=-75.5900293,mapbox_center_lat=6.2414662)
-        map.update_layout(margin={"r": 0,"t": 0,"l": 0, "b": 0},width=1920,height=1080)
 
+    map = go.Figure(go.Densitymapbox(lat=lat,lon=lon,z=z,radius=20, opacity= 0.9, zmin=0, zmax=100)).update_layout(mapbox_style='open-street-map',mapbox_center_lon=-75.5900293,mapbox_center_lat=6.2414662).update_layout(margin={"r": 0,"t": 0,"l": 0, "b": 0})
+    graphJSON = json.dumps(map, cls=plotly.utils.PlotlyJSONEncoder)   
+    
+    return render_template('map.html', username=username,sessionUrl=sessionUrl,sessionMessage=sessionMessage,graphJSON=graphJSON)
+
+@web.route('/')
+def index():
+    if 'username' in session:
+        username = session['username']
+        sessionUrl = url_for('logout')
+        sessionMessage = f"{session['username']} - Log Out"
+    else:
+        username = None
+        sessionUrl = url_for('login')
+        sessionMessage = f"Log In"
+    return render_template('index.html', username=username,sessionUrl=sessionUrl,sessionMessage=sessionMessage)
+
+# Define the logout route
+@web.route('/logout')
+@login_required
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('index'))
+
+@web.route('/dash')
+def dashMap():
     app.layout = html.Div([
     dcc.Graph(figure=map)
     ])

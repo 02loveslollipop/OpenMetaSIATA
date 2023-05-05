@@ -11,51 +11,78 @@
 <meta name="02lovelollipop" content="index, follow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script src="{{ url_for('static', filename='js/scroll.js') }}"></script>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/slidy.css') }}">
 
 </head>
 <body>
-<div id="menu">
-  <div class="icon-container">
-    <img src="/static/logo.svg" alt="Login logo" class="login-photo">
-  </div>
-
-  
-
-  <nav>
-    <input type="checkbox" id="show-menu" role="button">
-    <label for="show-menu" class="open"><span class="fa fa-bars"></span></label>
-    <label for="show-menu" class="close"><span class="fa fa-times">"</span></label>
-
-    <ul id="topnav">  
-      <li><a href="{{ url_for('map') }}">Map</a></li>
-      <li><a href="{{'static', url_for('map') }}">Table</a></li>
-      <li><a href="{{'static', url_for('map') }}">Raw</a></li>
-      <li><a href="{{ url_for('logout') }}">Log Out</a></li>
-    </ul>
-  </nav>
-</div>
-<div id="container">
-  <div id="pageheader">
-  </div>
-</div>
-
-<div class="space2"></div>
-<div class="hero">
-  <div class="hero-content">
-    <div class="title-content">
-      <h1>OpenMetaSIATA</h1>
-    </div>
-    <div class="title-text">
-      <p>The open-source SIATA Map Viewer</p>
-    </div>
-    <a href="{{ url_for('map') }}">
-      <button class="rounded-button" >View map</button>
-    </a>
+  <div id="menu">
     
+    <nav class="navbar">
+      <div class="navbar__logo">
+        <img src="/static/logo.svg" alt="logo" class="login-photo">
+      </div>
+        <div class="navbar__links-container">
+          <ul class = "navbar__links">  
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('map') }}">Map</a></li>
+            <li><a href="{{'static', url_for('map') }}">Tables</a></li>
+          </ul>
+        </div>
+      <div class="navbar__login">
+        <a href="{{ sessionUrl }}">{{ sessionMessage }}</a>
+      </div>
+    </nav>
+
   </div>
-  </body>
+  <div class="content">
+    <div class="hero">
+      <div class="hero-content">
+        <div class="title-content">
+          <h1>OpenMetaSIATA</h1>
+        </div>
+        <div class="title-text">
+          <p>The open-source SIATA Map Viewer</p>
+        </div>
+        <a href="{{ url_for('map') }}">
+          <button class="rounded-button" >View map</button>
+        </a>
+        
+      </div>
+    </div>
+    
+    <div class="hero2">
+      <div class="herocontent2">
+        <div class="title-content">
+          <h2>Free, open source and easily deployed</h2>
+        </div>
+        <div class="title-text2">
+          <p>OpenMetaSIATA is based in Flask, a powerful and flexible framework, allowing a pure HTML/CSS responsive webPages and APIs</p>
+        </div>
+        <a href="https://github.com/02loveslollipop/OpenMetaSIATA">
+          <button class="rounded-button" >Source code</button>
+        </a>
+        
+      </div>
+    </div>
+    
+    <div class="hero3">
+      <div class="herocontent3">
+        <div class="title-content">
+          <h1>A container-based design</h1>
+        </div>
+        <div class="title-text3">
+          <p>The container model allows to have an easier deployment, maintenance and expansion</p>
+        </div>
+        <a href="https://www.docker.com/resources/what-container/">
+          <button class="rounded-button" >Learn more</button>
+        </a>
+        
+      </div>
+    </div>
+  </div>
+</body>
 
 
 <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>

@@ -13,40 +13,34 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/slidy.css') }}">
-
 </head>
+
 <body>
-<div id="menu">
-  <div class="icon-container">
-    <img src="/static/logo.svg" alt="Login logo" class="login-photo">
+  <div id="menu">
+    <nav class="navbar">
+      <div class="navbar__logo">
+        <img src="/static/logo.svg" alt="logo" class="login-photo">
+      </div>
+        <div class="navbar__links-container">
+          <ul class = "navbar__links">  
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('map') }}">Map</a></li>
+            <li><a href="{{'static', url_for('map') }}">Tables</a></li>
+          </ul>
+        </div>
+      <div class="navbar__login">
+        <a href="{{ sessionUrl }}">{{ sessionMessage }}</a>
+      </div>
+    </nav>
+
   </div>
 
-  
-
-  <nav>
-    <input type="checkbox" id="show-menu" role="button">
-    <label for="show-menu" class="open"><span class="fa fa-bars"></span></label>
-    <label for="show-menu" class="close"><span class="fa fa-times">"</span></label>
-
-    <ul id="topnav">  
-      <li><a href="{{ url_for('map') }}">Map</a></li>
-      <li><a href="{{'static', url_for('map') }}">Table</a></li>
-      <li><a href="{{'static', url_for('map') }}">Raw</a></li>
-      <li><a href="{{ url_for('logout') }}">Log Out</a></li>
-    </ul>
-  </nav>
-</div>
-<div id="container">
-  <div id="pageheader">
+  <div class="content">
+    <div class="map-container">
+      <div id='chart' class='chart'” style="width: 100vw; height: 92.5vh; "></div>
+    </div>
   </div>
-</div>
-
-<div class="space"></div>
-<div class="map-container">
-  <iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless" src="{{ url_for('dashMap') }}" class="map-frame"></iframe>
-</div>
-  </body>
-
+</body>
 
 <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
 <script type='text/javascript'>
