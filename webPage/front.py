@@ -55,6 +55,10 @@ def login():
     else:
         return render_template('login.html')
 
+@web.route('/badapple')
+def badapple():
+    return render_template('badapple.html')
+
 @web.route('/map')
 @login_required
 def map():
