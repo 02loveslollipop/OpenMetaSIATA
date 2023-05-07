@@ -6,3 +6,4 @@ api/api.py
 config.yml
 api/__pycache__
 db/__pycache__
+.vscode/
