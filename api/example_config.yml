@@ -1,0 +1,9 @@
+network:
+  host: "0.0.0.0" #The IP for the host, the default value is 0.0.0.0
+  port: "5000" #The port where you want to deploy the server
+
+api:
+  debug: true #if you want to use Flask debug mode
+  url: "http://siata.gov.co:8089/estacionesNivel/cf7bb09b4d7d859a2840e22c3f3a9a8039917cc3/?format=json" #the url of the api where we retrieve the info
+  timeout: 60 #timeout of the updates for the stations info, the value is set in seconds
+  token: "MY_SECRET_TOKEN" #the token for authentication

@@ -1,0 +1,17 @@
+network:
+  host: "0.0.0.0" #The IP for the host, the default value is 0.0.0.0
+  port: "6969" #The port where you want to deploy the server
+
+api:
+  debug: true #if you want to use Flask debug mode
+  token: "MY_SECRET_TOKEN" #the token for authentication
+
+database:
+  type: "csv" #The type of the database: csv, excel, access, postgresql, mysql, mssql, custom
+  path: "./users.csv" #The path of the file, only use it if using csv, excel or access
+  database: "None" #The name of the database you want to use only use if using postgresql, mysql or mssql
+  user: "ZeroTwo" #The user for the database, only use if using postgresql, mysql or mssql
+  password: "admin" #The password for the database, only use if using postgresql, mysql or mssql
+  host: "192.168.1.1" #The host of the database, can the a host name or an ip address, only use if using postgresql, mysql or mssql
+  port: "443" #The port of the database, only use if using postgresql, mysql or mssql. If you are using the default port for the database you can leave this value as None
+  url: "myDialect+myDriver://user:password@192.168.1.1:69/test" #The sqlalchemy <database_url>, use if want to use another service, if using a custom driver you could need to install it
