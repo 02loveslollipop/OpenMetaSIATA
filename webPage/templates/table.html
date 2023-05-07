@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/slidy.css') }}">
 
 </head>
-<body>
+<body id = "table-body">
   <div id="menu">
     <nav class="navbar">
       <div class="navbar__logo">
@@ -39,7 +39,9 @@
 
   <div class="content">
     <div class="table-container">
-      {{ tableResult | safe }}
+      <div class="table-box">
+        {{ tableResult | safe }}
+      </div>
     </div>
   </div>
 </body>

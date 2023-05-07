@@ -16,7 +16,7 @@ config = ConfLoader()
 
 px.set_mapbox_access_token(config.mapToken)
 
-passwordRequest = ApiRequest(host=config.passwordHost,port=config.passwordToken,argsList=["Authorization","Hash","User"])
+passwordRequest = ApiRequest(host=config.passwordHost,port=config.paswwordPort,argsList=["Authorization","Hash","User"])
 
 indexRequest = ApiRequest(host=config.apiHost,port=config.apiPort,argsList=["Authorization"],resource="ListStation")
 
@@ -94,9 +94,10 @@ def map():
         lat.append(currentStation['longitude'])
         z.append(currentStation['porcentage'])
 
-    layout = go.Layout(autosize=True,mapbox= dict(accesstoken=config.mapToken,bearing=10,pitch=60,zoom=13,center= dict(lat=6.241,lon=-75.590),style=config.mapStyle))
+    layout = go.Layout(autosize=True,mapbox= dict(accesstoken=config.mapToken,bearing=10,pitch=60,zoom=18,center= dict(lat=6.241,lon=-75.590),style=config.mapStyle))
 
-    map = go.Figure(go.Densitymapbox(lat=lat,lon=lon,z=z,radius=20, opacity= 0.9, zmin=0, zmax=100),layout=layout).update_layout(margin={"r": 0,"t": 0,"l": 0, "b": 0})
+    map = go.Figure(go.Densitymapbox(lat=lat,lon=lon,z=z,radius=20, opacity= 0.9, zmin=0, zmax=100),layout=layout).update_layout(margin={"r": 0,"t": 0,"l": 0, "b": 0},paper_bgcolor='#1a1a1a',coloraxis_colorbar=dict(tickfont=dict(color='white'))).update_traces(
+    colorscale='Blues')
     graphJSON = json.dumps(map, cls=plotly.utils.PlotlyJSONEncoder)   
     
     return render_template('map.html', username=username,sessionUrl=sessionUrl,sessionMessage=sessionMessage,graphJSON=graphJSON)
