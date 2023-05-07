@@ -1,6 +1,6 @@
 FROM python:python:3.11.3
 RUN apt-get update
-WORKDIR /api
+WORKDIR .
 COPY api.py .
 COPY config.yml .
 COPY confLoader.py .
