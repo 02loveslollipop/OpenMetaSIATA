@@ -1,4 +1,4 @@
-FROM python:python:3.11.3
+FROM python:3.11.3
 WORKDIR .
 RUN apt-get update
 COPY db.py .
