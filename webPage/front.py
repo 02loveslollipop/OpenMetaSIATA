@@ -3,21 +3,26 @@ from console import Console
 from apiRequest import ApiRequest
 from confLoader import ConfLoader
 from flask import Flask, render_template, session, redirect, request, url_for
+import flask as fs
 import plotly.graph_objects as go
 import plotly
+import plotly.express as px
 from functools import wraps
-from dash import dcc, html, Dash
 import json
 
 SESSION_TYPE = 'memcache'
 
 web = Flask(__name__, static_url_path='/static')
 
-app = Dash(__name__,server=web,url_base_pathname='/dash/')
-
-app.layout = html.Div()
-
 authorization = "MY_SECRET_TOKEN"
+
+mapToken = "pk.eyJ1IjoiMDJsb3Zlc2xvbGxpcG9wIiwiYSI6ImNsaGFscTFwdTBpYnUzaXBiamhqOXF1ZWIifQ.hPt8d7_7Vc5sAiBzMHRHSw"
+
+mapStyle = "mapbox://styles/02loveslollipop/clhalt9sp020b01p8a60a7bt0/draft"
+
+px.set_mapbox_access_token(mapToken)
+
+
 
 passwordRequest = ApiRequest(host="127.0.0.1",port='8080',argsList=["Authorization","Hash","User"])
 
@@ -79,7 +84,9 @@ def map():
         lat.append(currentStation['longitude'])
         z.append(currentStation['porcentage'])
 
-    map = go.Figure(go.Densitymapbox(lat=lat,lon=lon,z=z,radius=20, opacity= 0.9, zmin=0, zmax=100)).update_layout(mapbox_style='open-street-map',mapbox_center_lon=-75.5900293,mapbox_center_lat=6.2414662).update_layout(margin={"r": 0,"t": 0,"l": 0, "b": 0})
+    layout = go.Layout(autosize=True,mapbox= dict(accesstoken=mapToken,bearing=10,pitch=60,zoom=13,center= dict(lat=6.241,lon=-75.590),style=mapStyle))
+
+    map = go.Figure(go.Densitymapbox(lat=lat,lon=lon,z=z,radius=20, opacity= 0.9, zmin=0, zmax=100),layout=layout).update_layout(margin={"r": 0,"t": 0,"l": 0, "b": 0})
     graphJSON = json.dumps(map, cls=plotly.utils.PlotlyJSONEncoder)   
     
     return render_template('map.html', username=username,sessionUrl=sessionUrl,sessionMessage=sessionMessage,graphJSON=graphJSON)
@@ -103,12 +110,28 @@ def logout():
     session.pop('username', None)
     return redirect(url_for('index'))
 
-@web.route('/dash')
-def dashMap():
-    app.layout = html.Div([
-    dcc.Graph(figure=map)
-    ])
-    return app.index()
+@web.route('/table')
+@login_required
+def table():
+    username = session['username']
+    sessionUrl = url_for('logout')
+    sessionMessage = f"{session['username']} - Log Out"
+    index = int(indexRequest.request([authorization]).json()['index'])
+    
+    lat = []
+    lon = []
+    z = []
+    code = []
+    htmlBuffer = ""
+    for i in range(index):
+        siataRequest.setUrl(resource=f"CheckLevel/{i}",protocol=siataRequest.protocol,host=siataRequest.host,port=siataRequest.port)
+        currentStation = siataRequest.request([authorization]).json()
+        htmlBuffer+=f"<tr>\n<td>\n{round(currentStation['stationCode'],2)}\n</td>\n<td>\n{round(currentStation['porcentage'],2)}\n</td>\n<td>\n{round(currentStation['longitude'],2)}\n</td>\n<td>\n{round(currentStation['latitude'],2)}\n</td>\n</tr>"
+    
+    html = f"<table>\n<tr>\n<th>\nStation code\n</th>\n<th>\nPorcentage level\n</th>\n<th>\nLongitude\n</th>\n<th>\nLatitude\n</th>\n</tr>\n{htmlBuffer}\n</table>"
+            
+    return render_template('table.html', username=username,sessionUrl=sessionUrl,sessionMessage=sessionMessage,tableResult=html)
+    
 
 if __name__ == '__main__':
     web.secret_key = 'MY_SECOND_SECRET_KEY'

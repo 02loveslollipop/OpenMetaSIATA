@@ -16,23 +16,25 @@
 </head>
 
 <body>
+
   <div id="menu">
     <nav class="navbar">
       <div class="navbar__logo">
-        <img src="/static/logo.svg" alt="logo" class="login-photo">
+        <a href="{{ url_for('badapple') }}">
+          <img src="/static/logo.svg" alt="logo" class="login-photo">
+        </a>
       </div>
         <div class="navbar__links-container">
           <ul class = "navbar__links">  
             <li><a href="{{ url_for('index') }}">Home</a></li>
             <li><a href="{{ url_for('map') }}">Map</a></li>
-            <li><a href="{{'static', url_for('map') }}">Tables</a></li>
+            <li><a href="{{ url_for('table') }}">Tables</a></li>
           </ul>
         </div>
       <div class="navbar__login">
         <a href="{{ sessionUrl }}">{{ sessionMessage }}</a>
       </div>
     </nav>
-
   </div>
 
   <div class="content">

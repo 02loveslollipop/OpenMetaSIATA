@@ -205,3 +205,35 @@ width: 18vh;
     justify-content: center;
     align-items: center;
 }
+
+table {
+    border-collapse: collapse;
+    width: 30vw;
+    text-align: center;
+}
+
+thead th {
+    background-color: #005DB6;
+    color: #fff;
+    font-weight: bold;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #3e9dff;
+}
+
+table td {
+    border: 1px solid #004094;
+    padding: 8px;
+    text-align: center;
+}
+
+.table-container {
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 8vh;
+}
