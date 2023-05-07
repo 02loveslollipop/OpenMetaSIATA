@@ -10,25 +10,17 @@ import plotly.express as px
 from functools import wraps
 import json
 
-SESSION_TYPE = 'memcache'
-
 web = Flask(__name__, static_url_path='/static')
 
-authorization = "MY_SECRET_TOKEN"
+config = ConfLoader()
 
-mapToken = "pk.eyJ1IjoiMDJsb3Zlc2xvbGxpcG9wIiwiYSI6ImNsaGFscTFwdTBpYnUzaXBiamhqOXF1ZWIifQ.hPt8d7_7Vc5sAiBzMHRHSw"
+px.set_mapbox_access_token(config.mapToken)
 
-mapStyle = "mapbox://styles/02loveslollipop/clhalt9sp020b01p8a60a7bt0/draft"
+passwordRequest = ApiRequest(host=config.passwordHost,port=config.passwordToken,argsList=["Authorization","Hash","User"])
 
-px.set_mapbox_access_token(mapToken)
+indexRequest = ApiRequest(host=config.apiHost,port=config.apiPort,argsList=["Authorization"],resource="ListStation")
 
-
-
-passwordRequest = ApiRequest(host="127.0.0.1",port='8080',argsList=["Authorization","Hash","User"])
-
-indexRequest = ApiRequest(host="127.0.0.1",port="7000",argsList=["Authorization"],resource="ListStation")
-
-siataRequest = ApiRequest(host="127.0.0.1",port="7000",argsList=["Authorization"])
+siataRequest = ApiRequest(host=config.apiHost,port=config.apiPort,argsList=["Authorization"])
 
 def login_required(func):
     @wraps(func)
@@ -52,7 +44,7 @@ def login():
         username = request.form['username']
         password = request.form['password']
         
-        if checkPasswordRequest(passwordRequest.request([authorization,password,username])):
+        if checkPasswordRequest(passwordRequest.request([config.passwordToken,password,username])):
             session['username'] = username
             return redirect(url_for('map'))
         else:
@@ -60,36 +52,11 @@ def login():
     else:
         return render_template('login.html')
 
-@web.route('/badapple')
-def badapple():
-    return render_template('badapple.html')
-
-@web.route('/map')
+@web.route('/logout')
 @login_required
-def map():
-    username = session['username']
-    sessionUrl = url_for('logout')
-    sessionMessage = f"{session['username']} - Log Out"
-    index = int(indexRequest.request([authorization]).json()['index'])
-    
-    lat = []
-    lon = []
-    z = []
-    
-    for i in range(index):
-        siataRequest.setUrl(resource=f"CheckLevel/{i}",protocol=siataRequest.protocol,host=siataRequest.host,port=siataRequest.port)
-        currentStation = siataRequest.request([authorization]).json()
-        print(f"Longitud: {currentStation['latitude']}\nLatitud: {currentStation['longitude']}\n Porcentage: {currentStation['porcentage']}")
-        lon.append(currentStation['latitude'])
-        lat.append(currentStation['longitude'])
-        z.append(currentStation['porcentage'])
-
-    layout = go.Layout(autosize=True,mapbox= dict(accesstoken=mapToken,bearing=10,pitch=60,zoom=13,center= dict(lat=6.241,lon=-75.590),style=mapStyle))
-
-    map = go.Figure(go.Densitymapbox(lat=lat,lon=lon,z=z,radius=20, opacity= 0.9, zmin=0, zmax=100),layout=layout).update_layout(margin={"r": 0,"t": 0,"l": 0, "b": 0})
-    graphJSON = json.dumps(map, cls=plotly.utils.PlotlyJSONEncoder)   
-    
-    return render_template('map.html', username=username,sessionUrl=sessionUrl,sessionMessage=sessionMessage,graphJSON=graphJSON)
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('index'))
 
 @web.route('/')
 def index():
@@ -103,12 +70,36 @@ def index():
         sessionMessage = f"Log In"
     return render_template('index.html', username=username,sessionUrl=sessionUrl,sessionMessage=sessionMessage)
 
-# Define the logout route
-@web.route('/logout')
+@web.route('/badapple')
+def badapple():
+    return render_template('badapple.html')
+
+@web.route('/map')
 @login_required
-def logout():
-    session.pop('username', None)
-    return redirect(url_for('index'))
+def map():
+    username = session['username']
+    sessionUrl = url_for('logout')
+    sessionMessage = f"{session['username']} - Log Out"
+    index = int(indexRequest.request([config.apiToken]).json()['index'])
+    
+    lat = []
+    lon = []
+    z = []
+    
+    for i in range(index):
+        siataRequest.setUrl(resource=f"CheckLevel/{i}",protocol=siataRequest.protocol,host=siataRequest.host,port=siataRequest.port)
+        currentStation = siataRequest.request([config.apiToken]).json()
+        print(f"Longitud: {currentStation['latitude']}\nLatitud: {currentStation['longitude']}\n Porcentage: {currentStation['porcentage']}")
+        lon.append(currentStation['latitude'])
+        lat.append(currentStation['longitude'])
+        z.append(currentStation['porcentage'])
+
+    layout = go.Layout(autosize=True,mapbox= dict(accesstoken=config.mapToken,bearing=10,pitch=60,zoom=13,center= dict(lat=6.241,lon=-75.590),style=config.mapStyle))
+
+    map = go.Figure(go.Densitymapbox(lat=lat,lon=lon,z=z,radius=20, opacity= 0.9, zmin=0, zmax=100),layout=layout).update_layout(margin={"r": 0,"t": 0,"l": 0, "b": 0})
+    graphJSON = json.dumps(map, cls=plotly.utils.PlotlyJSONEncoder)   
+    
+    return render_template('map.html', username=username,sessionUrl=sessionUrl,sessionMessage=sessionMessage,graphJSON=graphJSON)
 
 @web.route('/table')
 @login_required
@@ -116,7 +107,7 @@ def table():
     username = session['username']
     sessionUrl = url_for('logout')
     sessionMessage = f"{session['username']} - Log Out"
-    index = int(indexRequest.request([authorization]).json()['index'])
+    index = int(indexRequest.request([config.apiToken]).json()['index'])
     
     lat = []
     lon = []
@@ -125,7 +116,7 @@ def table():
     htmlBuffer = ""
     for i in range(index):
         siataRequest.setUrl(resource=f"CheckLevel/{i}",protocol=siataRequest.protocol,host=siataRequest.host,port=siataRequest.port)
-        currentStation = siataRequest.request([authorization]).json()
+        currentStation = siataRequest.request([config.apiToken]).json()
         htmlBuffer+=f"<tr>\n<td>\n{round(currentStation['stationCode'],2)}\n</td>\n<td>\n{round(currentStation['porcentage'],2)}\n</td>\n<td>\n{round(currentStation['longitude'],2)}\n</td>\n<td>\n{round(currentStation['latitude'],2)}\n</td>\n</tr>"
     
     html = f"<table>\n<tr>\n<th>\nStation code\n</th>\n<th>\nPorcentage level\n</th>\n<th>\nLongitude\n</th>\n<th>\nLatitude\n</th>\n</tr>\n{htmlBuffer}\n</table>"
@@ -134,6 +125,6 @@ def table():
     
 
 if __name__ == '__main__':
-    web.secret_key = 'MY_SECOND_SECRET_KEY'
+    web.secret_key = config.secretKey
     web.config['SESSION_TYPE'] = 'memcached'
-    web.run(debug=True,port='80',host='0.0.0.0')
+    web.run(debug=config.debug,port=config.port,host=config.host)

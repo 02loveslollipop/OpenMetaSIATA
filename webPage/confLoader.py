@@ -3,7 +3,9 @@ from console import Console
 
 class ConfLoader:
     def __init__(self):
-    
+        """
+        Create a class that contains all the configuration parameter for a program
+        """
         try:
             configFile = open('config.yml')
             print(Console.info("Using config.yml"))
@@ -13,12 +15,18 @@ class ConfLoader:
         finally:
             try:
                 config = yaml.load(configFile, Loader=yaml.FullLoader)
-                self.token = config['api']['token']
-                self.timeout = config['api']['timeout']
-                self.url = config['api']['url']
-                self.debug = config['api']['debug']
                 self.host = config['network']['host']
                 self.port = config['network']['port']
+                self.apiToken = config['apiRequest']['token']
+                self.apiHost = config['apiRequest']['host']
+                self.apiPort = config['apiRequest']['port']
+                self.passwordToken = config['passwordRequest']['token']
+                self.passwordHost = config['passwordRequest']['host']
+                self.paswwordPort = config['passwordRequest']['port']
+                self.mapStyle = config['map']['style']
+                self.mapToken = config['map']['token']
+                self.debug = config['web']['debug']
+                self.secretKey = config['web']['secretKey']
                         
             except KeyError as err:
                 import traceback

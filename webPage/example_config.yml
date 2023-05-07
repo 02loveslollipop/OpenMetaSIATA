@@ -1,0 +1,24 @@
+network:
+  host: "0.0.0.0" #The IP for the host, the default value is 0.0.0.0
+  port: "80" #The port where you want to deploy the server
+
+apiRequest:
+  token: "MY_SECRET_TOKEN" #the token of the api will be call to retrieve the data of the stations
+  host: "127.0.0.1"
+  port: "5000"
+
+passwordRequest:
+  token: "MY_SECRET_TOKEN" #the token of the api will be call for the password manager
+  host: "127.0.0.1"
+  port: "6969"
+
+map:
+  style: "mapbox://styles/user/style" #The style of the map, it can either be one of the available in the documentation of plotly.express.density_mapbox or the link of an mapbox style.
+  token: "pk.MySecretToken" #required if using a custom map of mapBox or when the map style requiere it, for further information check: https://plotly.com/python-api-reference/generated/plotly.express.density_mapbox.html
+
+web:
+  debug: true #if you want to use Flask debug mode
+  secretKey: "MY_EXTREMELY_HYPER_SECRET_TOKEN"
+
+
+

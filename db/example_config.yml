@@ -1,6 +1,6 @@
 network:
   host: "0.0.0.0" #The IP for the host, the default value is 0.0.0.0
-  port: "8080" #The port where you want to deploy the server
+  port: "6969" #The port where you want to deploy the server
 
 api:
   debug: true #if you want to use Flask debug mode
