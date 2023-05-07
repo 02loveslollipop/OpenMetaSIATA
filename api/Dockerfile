@@ -6,7 +6,7 @@ COPY config.yml .
 COPY confLoader.py .
 COPY console.py .
 COPY example_config.yml .
-COPY UpdateThread.py .
+COPY updateThread.py .
 COPY requirements.txt .
 RUN pip3 install -r requirements.txt
 CMD [ "python","api.py" ]
