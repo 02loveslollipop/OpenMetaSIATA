@@ -4,12 +4,12 @@ network:
 
 apiRequest:
   token: "MY_SECRET_TOKEN" #the token of the api will be call to retrieve the data of the stations
-  host: "127.0.0.1"
+  host: "172.16.8.241"
   port: "5000"
 
 passwordRequest:
   token: "MY_SECRET_TOKEN" #the token of the api will be call for the password manager
-  host: "127.0.0.1"
+  host: "172.16.8.241"
   port: "6969"
 
 map:
