@@ -1,6 +1,7 @@
-:'
-This script will allow to create any change in the docker files, you can use it if need to change a token, add password, or simply want to change any configuration.
-'
+#This script will allow to create any change in the docker files, you 
+#can use it if need to change a token, add password, or simply want 
+#to change any configuration.
+#Source: https://github.com/02loveslollipop/OpenMetaSIATA
 
 #Stop the docker-compose
 sudo docker-compose stop
