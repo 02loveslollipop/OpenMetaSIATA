@@ -22,7 +22,7 @@ services:
     networks:
       - default
   siata-api:
-    image: openmetasiata/web:1.0.0beta
+    image: openmetasiata/api:1.0.0beta
     hostname: openmetasiata-api
     container_name: openmetasiata-api
     expose:
