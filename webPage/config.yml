@@ -4,12 +4,12 @@ network:
 
 apiRequest:
   token: "MY_SECRET_TOKEN" #the token of the api will be call to retrieve the data of the stations
-  host: "172.16.8.241"
+  host: "openmetasiata-api"
   port: "5000"
 
 passwordRequest:
   token: "MY_SECRET_TOKEN" #the token of the api will be call for the password manager
-  host: "172.16.8.241"
+  host: "openmetasiata-db"
   port: "6969"
 
 map:
