@@ -1,12 +1,12 @@
-version: "1.0.0beta"
+version: '3.8'
 services:
   siata-web:
-    image: openmetasiata/web
+    image: openmetasiata/web:1.0.0beta
     hostname: openmetasiata-web
     container_name: openmetasiata-web
     depends_on:
-      - openmetasiata-api
-      - openmetasiata-db
+      - siata-db
+      - siata-api
     networks:
       - default
     expose:
@@ -14,7 +14,7 @@ services:
     ports:
       - "80:80"
   siata-db:
-    image: openmetasiata/db
+    image: openmetasiata/db:1.0.0beta
     hostname: openmetasiata-db
     container_name: openmetasiata-db
     expose:
@@ -22,7 +22,7 @@ services:
     networks:
       - default
   siata-api:
-    image: openmetasiata/api
+    image: openmetasiata/web:1.0.0beta
     hostname: openmetasiata-api
     container_name: openmetasiata-api
     expose:
