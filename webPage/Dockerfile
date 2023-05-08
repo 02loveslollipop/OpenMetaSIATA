@@ -1,8 +1,8 @@
 FROM python:3.11.3
 WORKDIR .
 RUN apt-get update
-COPY static/ .
-COPY templates/ .
+COPY ./static/ ./static/ 
+COPY ./templates/ ./templates/
 COPY apiRequest.py .
 COPY confLoader.py .
 COPY console.py .
