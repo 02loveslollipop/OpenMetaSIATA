@@ -9,48 +9,101 @@ SIATA have an API that allows to recieve information about all of their services
 ## Requirements
 
 1. A linux based system
+2. A MapBox token (Optional if using Guided setup)
 
 # Quick Setup
 
-The repo have an autosetup.py, that allows and help the process of deploy of the services, if you want, it's also possible to manually deploy every container.
+The repo contain a setup.sh, that allows and help the process of deploy of the services, if you want, it's also possible to manually deploy every container.
 
-1. Install Python 3.9 in your device.
-
-2. Clone the repository: 
+1. Clone the repository:
 
 ```bash
-git clone https://github.com/02loveslollipop/DiscordGPTChatBot.git
+git clone https://github.com/02loveslollipop/OpenMetaSIATA.git
 ```
 
-3. Install FFmpeg on your device, FFmpeg can be install [here](https://ffmpeg.org/)
+2. Execute the setup script: 
 
+```bash
+sudo bash setup.sh
+```
 
-4. Create a copy of ``example_config.yml`` and rename it as ``config.yml``, then open it and paste your Discord and OpenAI keys and change the role of the chat bot (Full description of [config.yml](https://github.com/02loveslollipop/DiscordGPTChatBot/wiki/Structure-of-config.yml)):
+3. Select the second option (2.Fast setup (default values))
+
+4. Get your token at [MapBox](https://account.mapbox.com/access-tokens/), it can either be a default token or a custom token
+
+5. Enter your token onto the script
+
+6. Try the front at [localhost:80](http://127.0.0.1:80)
+
+# Guided Setup
+
+The script also allow to do a custom guided setup, this will allow you to control certain configurations of the services, the script will modify the configuration files, build the new dockers and execute the docker-compose.
+
+# Advance Setup
+The script allows to create an Advance Setup, this mode will build and execute the docker-compose with the current config.yml of every service, in this mode you must change manually the configurations of ``api/config.yml``, ``db/config.yml`` and ``webPage/config.yml``
+``WARNING``: As the script is not modifying the config files, it will not warn of bad configurations.
+
+# Update containers
+It can be executed either with the 4th option of ``setup.sh`` or manually executing ``update.sh``
+```bash
+sudo bash update.sh
+```
+
+# Manual setup
+If you don't want to use the script to setup the services, you can follow this steps:
+
+1. Install docker-compose onto your system:
+
+  Ubuntu/Debian based distros:
+```bash
+sudo apt install docker-compose
+```
+  
+  Red Hat Enterprise Linux
+```bash
+sudo yum install -y yum-utils
+sudo yum-config-manager --add-repo https://download.docker.com/linux/rhel/docker-ce.repo
+sudo yum install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo systemctl start docker
+```
+
+4. Clone the repository:
+
+```bash
+git clone https://github.com/02loveslollipop/OpenMetaSIATA.git
+```
+
+3. Manually set-up the configuration files at ``api/config.yml``, ``db/config.yml`` and ``webPage/config.yml``
+
+4. Build the docker images:
+
+```bash
+sudo docker build -t openmetasiata/api:1.0.0beta api/ 
+sudo docker build -t openmetasiata/db:1.0.0beta db/ 
+sudo docker build -t openmetasiata/web:1.0.0beta webPage/
+```
+
+5. Modify ``docker-compose.yml``, changing the ports if you made any change in this aspect:
 
 ```yaml
-bot:
-  token: "YOUR_DISCORD_KEY" # Paste here the token you got from Discord Developer Portal
-
-open_ai:
-  token: "YOUR_OPEN_AI_KEY" # Paste here the OpenAI secret key you got from OpenAI platform
-  role: "You are a helpful assistant." # Change here chatbot's role, this will change it's behavior answering questions
+siata-web:
+  ...
+  expose:
+    - "<new_web_port>"
+  ports:
+    - "<new_web_port>:<new_web_port>"
+siata-db:
+  ...
+  expose:
+    - "<new_db_port>"
+siata-api:
+  ...
+  expose:
+    - "<new_api_port>"
 ```
 
-5. Install requirements:
+6. Start the docker-compose file using:
 
 ```bash
-pip -r /path/to/your/repo/requirements.txt
+sudo docker-compose -f docker-compose.yml up -d
 ```
-
-6. Run the bot:
-
-```bash
-python main.py
-```
-
-
-# Discord Commands
-[Full list of commands here](https://github.com/02loveslollipop/DiscordGPTChatBot/wiki/Discord-commands)
-
-# Configuration of config.yml
-[Config.yml configuration guide](https://github.com/02loveslollipop/DiscordGPTChatBot/wiki/Structure-of-config.yml)
