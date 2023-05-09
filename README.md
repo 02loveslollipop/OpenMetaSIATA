@@ -54,12 +54,12 @@ If you don't want to use the script to setup the services, you can follow this s
 
 1. Install docker-compose onto your system:
 
-  Ubuntu/Debian based distros:
+    Ubuntu/Debian based distros:
 ```bash
 sudo apt install docker-compose
 ```
   
-  Red Hat Enterprise Linux
+    Red Hat Enterprise Linux
 ```bash
 sudo yum install -y yum-utils
 sudo yum-config-manager --add-repo https://download.docker.com/linux/rhel/docker-ce.repo
