@@ -541,7 +541,7 @@ def advanceSetup() -> None:
     clear()
     print('The advance setup allow to make a custom installation either because you alredy have a config file for the API,DB and WEB, or because you want to modify manually the YAML files. This script will build the docker containers and will execute them.\nPress any button to start...')
     input()
-    os.system('bash setup.sh')
+    exit()
 
 def updateContainer() -> None:
     clear()
@@ -571,7 +571,7 @@ while not option:
         option = True
     else:
         clear()
-        print('The selection is invalid, please select a valid option:\n1.Guided setup (easy method)\n2.Advance setup\n3.Update containers')
+        print('The selection is invalid, please select a valid option:\n1.Guided setup (easy method)\n2.Fast setup (default values)\n3.Advance setup\n4.Update containers')
 
 
 

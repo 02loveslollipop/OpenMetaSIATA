@@ -3,7 +3,7 @@ network:
   port: "6969" #The port where you want to deploy the server
 
 api:
-  debug: true #if you want to use Flask debug mode
+  debug: false #if you want to use Flask debug mode
   token: "MY_SECRET_TOKEN" #the token for authentication
 
 database:

@@ -17,7 +17,7 @@ map:
   token: "pk.eyJ1IjoiMDJsb3Zlc2xvbGxpcG9wIiwiYSI6ImNsaGFscTFwdTBpYnUzaXBiamhqOXF1ZWIifQ.hPt8d7_7Vc5sAiBzMHRHSw" #required if using a custom map of mapBox or when the map style requiere it, for further information check: https://plotly.com/python-api-reference/generated/plotly.express.density_mapbox.html
 
 web:
-  debug: true #if you want to use Flask debug mode
+  debug: false #if you want to use Flask debug mode
   secretKey: "MY_EXTREMELY_HYPER_SECRET_TOKEN"
 
 
