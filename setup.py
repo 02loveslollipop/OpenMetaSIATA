@@ -550,7 +550,7 @@ def updateContainer() -> None:
     os.system('bash update.sh')
     
 def clear() -> None:
-    os.system('cls')
+    os.system('clear')
 
 option = False
 print('Welcome to the OpenMetaSIATA setup assistant, please select one of the setup options:\n1.Guided setup (easy method)\n2.Fast setup (default values)\n3.Advance setup\n4.Update containers')
