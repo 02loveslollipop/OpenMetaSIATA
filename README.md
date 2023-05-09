@@ -53,6 +53,7 @@ sudo bash update.sh
 If you don't want to use the script to setup the services, you can follow this steps:
 
 1. Install docker-compose onto your system:
+
 Ubuntu/Debian based distros:
 ```bash
 sudo apt install docker-compose
