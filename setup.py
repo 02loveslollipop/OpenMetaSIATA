@@ -559,12 +559,16 @@ while not option:
     selection = input()
     if selection == '1':
         guidedSetup()
+        option = True
     elif selection == '2':
         fastSetup()
+        option = True
     elif selection == '3':
         advanceSetup()
+        option = True
     elif selection == '4':
         updateContainer()
+        option = True
     else:
         clear()
         print('The selection is invalid, please select a valid option:\n1.Guided setup (easy method)\n2.Advance setup\n3.Update containers')
