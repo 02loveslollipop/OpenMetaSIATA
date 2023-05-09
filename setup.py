@@ -62,7 +62,7 @@ def fastSetup() -> None:
         try:
             clear()
             print("Trying to save web config") 
-            with open("./web/config.yml") as f:
+            with open("./webPage/config.yml") as f:
                 web = yaml.safe_load(f)
                 
             web['web']['secretKey'] = webToken
@@ -71,7 +71,7 @@ def fastSetup() -> None:
             web['passwordRequest']['token'] = dbToken
 
 
-            with open("./web/config.yml", "w") as f:
+            with open("./webPage/config.yml", "w") as f:
                 yaml.dump(web, f)
             break    
         except PermissionError:
@@ -519,7 +519,7 @@ def guidedSetup() -> None:
         try:
             clear()
             print("Trying to save web config") 
-            with open("./web/config.yml") as f:
+            with open("./webPage/config.yml") as f:
                 web = yaml.safe_load(f)
                 
             web['web']['secretKey'] = webToken
@@ -529,7 +529,7 @@ def guidedSetup() -> None:
             web['passwordRequest']['token'] = dbToken
 
 
-            with open("./web/config.yml", "w") as f:
+            with open("./webPage/config.yml", "w") as f:
                 yaml.dump(web, f)
             break    
         except PermissionError:
