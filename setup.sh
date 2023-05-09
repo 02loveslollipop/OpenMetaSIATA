@@ -1,7 +1,7 @@
 sudo apt update
 sudo apt install docker-compose
 sudo apt install python3
-sudo python setup.py
+sudo python3 setup.py
 #Building of images
 sudo docker build -t openmetasiata/api:1.0.0beta api/ 
 sudo docker build -t openmetasiata/db:1.0.0beta db/ 
