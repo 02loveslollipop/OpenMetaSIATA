@@ -1,0 +1,1 @@
+echo 'sudo docker-compose -f %cd%/docker-compose.yml up -d' >> ~/.bashrc 
